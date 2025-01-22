@@ -84,7 +84,9 @@ button {
 }
 
 
-.display {
+#display {
   min-height: 10vh;
   border: 1px solid black;
+  text-align: right;
+  font-size: 2em;
 }
