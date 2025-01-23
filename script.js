@@ -1,5 +1,8 @@
-const add = function(augend, addend) {
-  return augend + addend;
+const add = function() {
+  if (Number(calculator.firstNumber) && Number(calculator.secondNumber)) {
+    calculator.result = calculator.firstNumber + calculator.secondNumber;
+    updateDisplayText(calculator.result);
+  }
 };
 
 const subtract = function(minuend, subtrahend) {
@@ -15,7 +18,7 @@ const divide = function(dividend, divisor) {
 };
 
 const allClear = function() {
-return display = 0;
+  return display = 0;
 };
 
 function truncateDisplay() {
@@ -24,16 +27,22 @@ function truncateDisplay() {
 
 function clearDisplay() {
   calculator.displayText = '';
+  calculator.display.textContent = calculator.displayText;
+}
+
+function updateDisplayText(result) {
+  // check if overflowing display
+  if (calculator.displayText.length <= 10) {    
+    calculator.displayText = result.toString();
+  } else {
+    truncateDisplay();
+  }
+  calculator.display.textContent = calculator.displayText;
 }
 
 function concatenateDisplay(char) {
-  // check if overflowing display
-  if (calculator.displayText.length <= 10) {    
-    calculator.displayText += char;
-  } else {
-    truncateDisplay(calculator)
-  }
-  calculator.display.textContent = calculator.displayText; 
+  calculator.displayText += char;
+  updateDisplayText(calculator.displayText);
 }
 
 function updateState(char) {
@@ -42,9 +51,9 @@ function updateState(char) {
   if (char.match(/[+|-|×|÷]/) && calculator.firstNumber) calculator.operator = char;
   if (calculator.firstNumber && calculator.operator) {
     clearDisplay();
-    calculator.secondNumber = Number(calculator.displayText);
+    updateDisplayText(calculator.secondNumber);
   }
-  calculator.firstNumber = Number(calculator.displayText);
+  // updateDisplayText(calculator.firstNumber);
 }
 
 
@@ -65,6 +74,7 @@ function Calculator() {
   this.firstNumber = null;
   this.secondNumber = null;
   this.operator = null;
+  this.result = null;
 }
 
 const calculator = new Calculator();
@@ -76,9 +86,9 @@ calculator.buttons.forEach((button) => {
 });
 
 function operate() {
-  if (calculator.operator === '+') add(calculator.firstNumber, calculator.secondNumber);
-  if (calculator.operator === '-') subtract(calculator.firstNumber, calculator.secondNumber);
-  if (calculator.operator === '*') multiply(calculator.firstNumber, calculator.secondNumber);
-  if (calculator.operator === '/') divide(calculator.firstNumber, calculator.secondNumber);
+  if (calculator.operator === '+') add();
+  if (calculator.operator === '-') subtract();
+  if (calculator.operator === '*') multiply();
+  if (calculator.operator === '/') divide();
 }
 
