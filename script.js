@@ -18,7 +18,12 @@ const divide = function(dividend, divisor) {
 };
 
 const allClear = function() {
-  return display = 0;
+  calculator.displayText = '0';
+  calculator.firstNumber = null;
+  calculator.secondNumber = null;
+  calculator.operator = null;
+  calculator.result = null;
+
 };
 
 function truncateDisplay() {
@@ -48,9 +53,10 @@ function concatenateDisplay(char) {
 function updateState(char) {
   if (char === '=') operate();
   if (char.match(/[+|-|×|÷]/) && calculator.firstNumber) calculator.operator = char;
+  if (char === 'AC') allClear();
+  if (calculator.firstNumber && calculator.operator)  clearDisplay();
   if (char.match(/[0-9|.]/)) {
     // testing for secondNumber
-    if (calculator.firstNumber && calculator.operator)  clearDisplay();
     concatenateDisplay(char);
   };
   calculator.updateSecondNumber();
