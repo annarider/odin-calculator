@@ -55,13 +55,12 @@ function updateState(char) {
   if (char.match(/[+|-|×|÷]/) && calculator.firstNumber) calculator.operator = char;
   if (char === 'AC') allClear();
   if (char === 'C') allClear(); // Need to update for backspace. Clearing for now
-  if (calculator.firstNumber && calculator.operator)  clearDisplay();
+  // testing for secondNumber
   if (char.match(/[0-9|.]/)) {
-    // testing for secondNumber
+    if (calculator.firstNumber && calculator.operator)  clearDisplay();
     concatenateDisplay(char);
+    (!calculator.firstNumber) ? calculator.updateFirstNumber() : calculator.updateSecondNumber();
   };
-  calculator.updateSecondNumber();
-  calculator.updateFirstNumber();
 }
 
 
