@@ -23,7 +23,7 @@ const allClear = function() {
   calculator.secondNumber = null;
   calculator.operator = null;
   calculator.result = null;
-
+  updateDisplayText(calculator.displayText);
 };
 
 function truncateDisplay() {
