@@ -62,11 +62,13 @@ function updateState(char) {
 
 
 function buildDisplay(button, event) {
-  // clear display on first button press
-  if (calculator.displayText.length === 1 && calculator.displayText === '0') clearDisplay();
-  // build display
+    // build display
   const char = event.target.textContent;
   if (char === '.') button.disabled = true;
+  // Clear leading zero only for numeric input
+  if (calculator.displayText === '0' && char.match(/[0-9]/)) {
+    clearDisplay();
+  }
   // only show numbers and decimal point in display
   updateState(char);
   }
