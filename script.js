@@ -52,8 +52,9 @@ function updateState(char) {
     // testing for secondNumber
     if (calculator.firstNumber && calculator.operator)  clearDisplay();
     concatenateDisplay(char);
-    updateCalcNumber();
   };
+  calculator.updateSecondNumber();
+  calculator.updateFirstNumber();
 }
 
 
