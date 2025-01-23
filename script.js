@@ -49,7 +49,7 @@ function concatenateDisplay(char) {
 
 function updateState(char) {
   if (char === '=') operate();
-  if (char.match(/[+|-|×|÷]/) && calculator.firstNumber) calculator.operator = char;
+  if ("+-×÷".includes(char) && calculator.firstNumber) calculator.operator = char;
   if (char === 'AC') allClear();
   if (char === 'C') allClear(); // Need to update for backspace. Clearing for now
   // testing for secondNumber
