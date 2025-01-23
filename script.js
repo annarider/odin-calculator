@@ -49,7 +49,7 @@ function concatenateDisplay(char) {
 
 function updateState(char) {
   if (char === '=') operate();
-  if ("+-×÷".includes(char) && calculator.firstNumber) calculator.operator = char;
+  if ("+-×÷".includes(char) && calculator.firstNumbe !== null) calculator.operator = char;
   if (char === 'AC') allClear();
   if (char === 'C') allClear(); // Need to update for backspace. Clearing for now
   // testing for secondNumber
@@ -65,10 +65,14 @@ function buildDisplay(button, event) {
     // build display
   const char = event.target.textContent;
   if (char === '.') button.disabled = true;
-  // Clear leading zero only for numeric input
-  if (calculator.displayText === '0' && char.match(/[0-9]/)) {
-    clearDisplay();
-  }
+  
+  // Only clear leading zero for first number input
+  if (calculator.displayText === '0' && 
+    /^\d$/.test(char) && 
+    !calculator.operator) {  // Not entering second number
+  clearDisplay();
+}
+
   // only show numbers and decimal point in display
   updateState(char);
   }
