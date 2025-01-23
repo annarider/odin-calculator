@@ -1,12 +1,9 @@
 const add = function() {
-  if (Number(calculator.firstNumber) && Number(calculator.secondNumber)) {
-    calculator.result = calculator.firstNumber + calculator.secondNumber;
-    updateDisplayText(calculator.result);
-  }
+  calculator.result = calculator.firstNumber + calculator.secondNumber;
 };
 
-const subtract = function(minuend, subtrahend) {
-  return minuend - subtrahend;
+const subtract = function() {
+  calculator.result = calculator.firstNumber - calculator.secondNumber;
 };
 
 const multiply = function(multiplicand, multiplier) {
@@ -102,9 +99,11 @@ calculator.buttons.forEach((button) => {
 });
 
 function operate() {
-  if (calculator.operator === '+') add();
-  if (calculator.operator === '-') subtract();
-  if (calculator.operator === '*') multiply();
-  if (calculator.operator === '/') divide();
+  if (Number(calculator.firstNumber) && Number(calculator.secondNumber)) {
+    if (calculator.operator === '+') add();
+    if (calculator.operator === '-') subtract();
+    if (calculator.operator === '*') multiply();
+    if (calculator.operator === '/') divide();
+    updateDisplayText(calculator.result);
+  }
 }
-
