@@ -54,6 +54,7 @@ function updateState(char) {
   if (char === '=') operate();
   if (char.match(/[+|-|×|÷]/) && calculator.firstNumber) calculator.operator = char;
   if (char === 'AC') allClear();
+  if (char === 'C') allClear(); // Need to update for backspace. Clearing for now
   if (calculator.firstNumber && calculator.operator)  clearDisplay();
   if (char.match(/[0-9|.]/)) {
     // testing for secondNumber
