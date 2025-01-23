@@ -99,7 +99,8 @@ calculator.buttons.forEach((button) => {
 });
 
 function operate() {
-  if (Number(calculator.firstNumber) && Number(calculator.secondNumber)) {
+  if (calculator.firstNumber !== null && calculator.secondNumber !== null && 
+    typeof calculator.firstNumber === 'number' && typeof calculator.secondNumber === 'number') {
     if (calculator.operator === '+') add();
     if (calculator.operator === '-') subtract();
     if (calculator.operator === '*') multiply();
