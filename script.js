@@ -46,14 +46,14 @@ function concatenateDisplay(char) {
 }
 
 function updateState(char) {
-  if (char.match(/[0-9|.]/)) concatenateDisplay(char);
   if (char === '=') operate();
   if (char.match(/[+|-|×|÷]/) && calculator.firstNumber) calculator.operator = char;
-  if (calculator.firstNumber && calculator.operator) {
-    clearDisplay();
-    updateDisplayText(calculator.secondNumber);
-  }
-  // updateDisplayText(calculator.firstNumber);
+  if (char.match(/[0-9|.]/)) {
+    // testing for secondNumber
+    if (calculator.firstNumber && calculator.operator)  clearDisplay();
+    concatenateDisplay(char);
+    updateCalcNumber();
+  };
 }
 
 
@@ -75,6 +75,15 @@ function Calculator() {
   this.secondNumber = null;
   this.operator = null;
   this.result = null;
+  this.updateFirstNumber = function () {
+    this.firstNumber = Number(this.displayText);
+  };
+  this.updateSecondNumber = function () {
+    this.secondNumber = Number(this.displayText);
+  };
+  this.updateResultNumber = function () {
+    this.result = Number(this.displayText);
+  };
 }
 
 const calculator = new Calculator();
