@@ -42,51 +42,59 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /*
-  9. Create a root stacking context
+9. Create a root stacking context
 */
 #root, #__next {
   isolation: isolate;
 }
 
 body {
+  display: flex;
+  height: 100vh;
+  background-color: rosybrown;
   font-family: Verdana, Tahoma, sans-serif;
   font-size: x-large;
+  justify-content: center;
+  align-items: center;
 }
 
 .container {
   display: flex;
   flex-direction: column;
-  height: 50vh;
   width: 50vh;
   min-height: 0;
-  margin: 0 auto;
+  padding: 1em;
+  border: 5px solid silver;
+  background-color: beige;
   justify-content: stretch;
 }
 
 .row {
   display: flex;
-  flex: 1 1 0;
+  flex: 1;
   min-height: 0;
 }
 
 button {
-  flex: 1 1 0;
-  margin: 0.5em;
-  border: 1px solid black;
+  flex: 1;
+  width: 4em;
+  margin: .5em;
+  gap: 8px;
+  background-color: darkolivegreen;
+  color: antiquewhite;
+  box-shadow: olivedrab;
 }
 
-#operator-all-clear {
-  flex-grow: 2;
-}
-
-#operator-equal {
+#operator-all-clear, #operator-equal {
   flex-grow: 2;
 }
 
 
 #display {
   min-height: 10vh;
-  border: 1px solid black;
+  margin: .25em;
+  border: 2px solid brown;
+  background-color: white;
   text-align: right;
   font-size: 2em;
 }
