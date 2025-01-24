@@ -63,7 +63,7 @@ function hasDecimal(currentValue){
 
 function updateState(event) {
   const char = event.textContent;
-  if (char === '=') operate();
+  if (char === '=' || ("+-×÷".includes(char)  && calculator.result !== null)) operate();
   if ("+-×÷".includes(char) && calculator.firstNumber !== null) calculator.operator = char;
   if (char === 'AC') allClear();
   if (char === 'C') allClear(); // Need to update for backspace. Clearing for now
@@ -86,7 +86,7 @@ function buildDisplay(button, char) {
   calculator.firstNumber && 
   calculator.operator &&
   calculator.secondNumber === null) clearDisplay();
-  if (char !== '=' && char !== 'AC') updateDisplayText(calculator.userInput);
+  if (char !== '=' && char !== 'AC' & !"+-×÷".includes(char)) updateDisplayText(calculator.userInput);
   if (char === 'AC') updateDisplayText('0');
   // reset to prepare for secondNumber  
   if ("+-×÷".includes(char) && calculator.firstNumber !== null) calculator.userInput = '';
