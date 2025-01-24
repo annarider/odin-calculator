@@ -21,7 +21,6 @@ const allClear = function() {
   calculator.secondNumber = null;
   calculator.operator = null;
   calculator.result = null;
-  updateDisplayText(calculator.userInput);
 };
 
 function truncateDisplay() {
@@ -33,10 +32,10 @@ function clearDisplay() {
   calculator.display.textContent = calculator.userInput;
 }
 
-function updateDisplayText() {
+function updateDisplayText(input) {
   // check if overflowing display
   if (calculator.userInput.length > 10) truncateDisplay();
-  calculator.display.textContent = calculator.userInput;
+  calculator.display.textContent = input.toString();
 }
 
 function updateState(event) {
@@ -61,7 +60,7 @@ function buildDisplay(button, char) {
   calculator.firstNumber && 
   calculator.operator &&
   calculator.secondNumber === null) clearDisplay();
-  updateDisplayText();
+  if (char !== '=') updateDisplayText(calculator.userInput);
   // reset to prepare for secondNumber  
   if ("+-×÷".includes(char) && calculator.firstNumber !== null) calculator.userInput = '';
 }
