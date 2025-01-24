@@ -60,7 +60,8 @@ function buildDisplay(button, char) {
   calculator.firstNumber && 
   calculator.operator &&
   calculator.secondNumber === null) clearDisplay();
-  if (char !== '=') updateDisplayText(calculator.userInput);
+  if (char !== '=' && char !== 'AC') updateDisplayText(calculator.userInput);
+  if (char === 'AC') updateDisplayText('0');
   // reset to prepare for secondNumber  
   if ("+-×÷".includes(char) && calculator.firstNumber !== null) calculator.userInput = '';
 }
