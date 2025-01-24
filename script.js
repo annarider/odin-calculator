@@ -6,12 +6,12 @@ const subtract = function() {
   calculator.result = calculator.firstNumber - calculator.secondNumber;
 };
 
-const multiply = function(multiplicand, multiplier) {
-	return multiplicand * multiplier;
+const multiply = function() {
+  calculator.result = calculator.firstNumber * calculator.secondNumber;
 };
 
-const divide = function(dividend, divisor) {
-  return dividend / divisor;
+const divide = function() {
+  calculator.result = calculator.firstNumber / calculator.secondNumber;
 };
 
 const allClear = function() {
@@ -100,8 +100,8 @@ function operate() {
     typeof calculator.firstNumber === 'number' && typeof calculator.secondNumber === 'number') {
     if (calculator.operator === '+') add();
     if (calculator.operator === '-') subtract();
-    if (calculator.operator === '*') multiply();
-    if (calculator.operator === '/') divide();
+    if (calculator.operator === '×') multiply();
+    if (calculator.operator === '÷') divide();
     updateDisplayText(calculator.result);
   }
 }
