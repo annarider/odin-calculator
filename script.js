@@ -33,6 +33,8 @@ function handleSubsequentNumbers(char) {
 
 function allClear() {
   calculator.display.textContent = '0';
+  const decimalButton = Array.from(calculator.buttons).find(button => button.id === 'decimal-point');
+  decimalButton.disabled = false;
   calculator.userInput = '';
   calculator.firstNumber = null;
   calculator.secondNumber = null;
@@ -56,6 +58,10 @@ function updateDisplayText(input) {
   calculator.display.textContent = input;
 }
 
+function hasDecimal(currentValue){
+  return currentValue.toString().includes('.');
+}
+
 function updateState(event) {
   const char = event.textContent;
   if (char === '=') operate();
@@ -66,13 +72,14 @@ function updateState(event) {
     calculator.userInput += char;
     (!calculator.operator) ? calculator.updateFirstNumber() : calculator.updateSecondNumber();
   };
+  if (char === '.' && !hasDecimal(calculator.userInput)) calculator.userInput += char; 
   // prepare for subsequent numbers after secondNumber
   if ("+-×÷".includes(char) && calculator.result !== null) handleSubsequentNumbers(char);
   return char;
 }
 
 function buildDisplay(button, char) {
-  if (char === '.') button.disabled = true;
+  if (char === '.') button.disabled = hasDecimal(calculator.userInput);
   // check for first digit in firstNumber
   if (/^\d$/.test(char) && calculator.firstNumber === null) clearDisplay();
   // check for first digit in secondNumber
