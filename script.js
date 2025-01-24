@@ -46,7 +46,7 @@ function updateState(event) {
   if (char === 'C') allClear(); // Need to update for backspace. Clearing for now
   if (/^\d$/.test(char)) {
     calculator.userInput += char;
-    (!calculator.firstNumber) ? calculator.updateFirstNumber() : calculator.updateSecondNumber();
+    (!calculator.operator) ? calculator.updateFirstNumber() : calculator.updateSecondNumber();
   };
   return char;
 }
