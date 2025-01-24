@@ -14,6 +14,17 @@ const divide = function() {
   calculator.result = calculator.firstNumber / calculator.secondNumber;
 };
 
+function operate() {
+  if (calculator.firstNumber !== null && calculator.secondNumber !== null && 
+    typeof calculator.firstNumber === 'number' && typeof calculator.secondNumber === 'number') {
+    if (calculator.operator === '+') add();
+    if (calculator.operator === '-') subtract();
+    if (calculator.operator === '×') multiply();
+    if (calculator.operator === '÷') divide();
+    updateDisplayText(calculator.result);
+  }
+}
+
 const allClear = function() {
   calculator.display.textContent = '0';
   calculator.userInput = '';
@@ -49,6 +60,8 @@ function updateState(event) {
     calculator.userInput += char;
     (!calculator.operator) ? calculator.updateFirstNumber() : calculator.updateSecondNumber();
   };
+  // prepare for subsequent numbers after secondNumber
+  if (char === '=' && calculator.result !== null) calculator.firstNumber = '';
   return char;
 }
 
@@ -95,14 +108,3 @@ calculator.buttons.forEach((button) => {
     buildDisplay(button, char);
   });
 });
-
-function operate() {
-  if (calculator.firstNumber !== null && calculator.secondNumber !== null && 
-    typeof calculator.firstNumber === 'number' && typeof calculator.secondNumber === 'number') {
-    if (calculator.operator === '+') add();
-    if (calculator.operator === '-') subtract();
-    if (calculator.operator === '×') multiply();
-    if (calculator.operator === '÷') divide();
-    updateDisplayText(calculator.result);
-  }
-}
