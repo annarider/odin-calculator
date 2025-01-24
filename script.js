@@ -27,7 +27,6 @@ function operate() {
 
 function handleSubsequentNumbers(char) {
   calculator.firstNumber = calculator.result;
-  calculator.operator = char;
   calculator.secondNumber = null;
 }
 
