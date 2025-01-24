@@ -11,7 +11,11 @@ const multiply = function() {
 };
 
 const divide = function() {
-  calculator.result = calculator.firstNumber / calculator.secondNumber;
+  if (calculator.secondNumber === 0) {
+    calculator.result = '==>∞?';
+  } else {
+    calculator.result = calculator.firstNumber / calculator.secondNumber;
+  }
 };
 
 function operate() {
