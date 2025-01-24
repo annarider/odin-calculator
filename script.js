@@ -23,8 +23,8 @@ const allClear = function() {
   calculator.result = null;
 };
 
-function truncateDisplay() {
-  calculator.userInput = calculator.userInput.slice(0, 11);
+function truncateDisplay(input) {
+  return input.slice(0, 11);
 }
 
 function clearDisplay() {
@@ -33,9 +33,10 @@ function clearDisplay() {
 }
 
 function updateDisplayText(input) {
+  if (input !== null) input = input.toString();
   // check if overflowing display
-  if (calculator.userInput.length > 10) truncateDisplay();
-  calculator.display.textContent = input.toString();
+  if (input.length > 10) input = truncateDisplay(input);
+  calculator.display.textContent = input;
 }
 
 function updateState(event) {
