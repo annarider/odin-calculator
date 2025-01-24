@@ -63,7 +63,12 @@ function hasDecimal(currentValue){
 
 function updateState(event) {
   const char = event.textContent;
-  if (char === '=' || ("+-×÷".includes(char)  && calculator.result !== null)) operate();
+  // handle operate on 2 numbers 
+  if (char === '=' || 
+      // handle if already used operate and want to use subsequent numbers 
+      ("+-×÷".includes(char) && calculator.result !== null) ||
+      ("+-×÷".includes(char) && calculator.firstNumber !== null && calculator.secondNumber !== null)
+    ) operate();
   if ("+-×÷".includes(char) && calculator.firstNumber !== null) calculator.operator = char;
   if (char === 'AC') allClear();
   if (char === 'C') allClear(); // Need to update for backspace. Clearing for now
@@ -83,10 +88,15 @@ function buildDisplay(button, char) {
   if (/^\d$/.test(char) && calculator.firstNumber === null) clearDisplay();
   // check for first digit in secondNumber
   if (/^\d$/.test(char) && 
-  calculator.firstNumber && 
+  calculator.firstNumber !== null && 
   calculator.operator &&
   calculator.secondNumber === null) clearDisplay();
-  if (char !== '=' && char !== 'AC' & !"+-×÷".includes(char)) updateDisplayText(calculator.userInput);
+  // check numeric input
+  if (char !== '=' && char !== 'AC') updateDisplayText(calculator.userInput);
+  // check for subsequent numbers 
+  if ("+-×÷".includes(char) && calculator.firstNumber !== null && calculator.secondNumber !== null) {
+    updateDisplayText(calculator.result);
+  }
   if (char === 'AC') updateDisplayText('0');
   // reset to prepare for secondNumber  
   if ("+-×÷".includes(char) && calculator.firstNumber !== null) calculator.userInput = '';
