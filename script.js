@@ -15,92 +15,83 @@ const divide = function(dividend, divisor) {
 };
 
 const allClear = function() {
-  calculator.displayText = '0';
+  calculator.display.textContent = '0';
+  calculator.userInput = '';
   calculator.firstNumber = null;
   calculator.secondNumber = null;
   calculator.operator = null;
   calculator.result = null;
-  updateDisplayText(calculator.displayText);
+  updateDisplayText(calculator.userInput);
 };
 
 function truncateDisplay() {
-  calculator.displayText = calculator.displayText.slice(0, 11);
+  calculator.userInput = calculator.userInput.slice(0, 11);
 }
 
 function clearDisplay() {
-  calculator.displayText = '';
-  calculator.display.textContent = calculator.displayText;
+  calculator.userInput = '';
+  calculator.display.textContent = calculator.userInput;
 }
 
-function updateDisplayText(result) {
+function updateDisplayText() {
   // check if overflowing display
-  if (calculator.displayText.length <= 10) {    
-    calculator.displayText = result.toString();
-  } else {
-    truncateDisplay();
-  }
-  calculator.display.textContent = calculator.displayText;
+  if (calculator.userInput.length > 10) truncateDisplay();
+  calculator.display.textContent = calculator.userInput;
 }
 
-function concatenateDisplay(char) {
-  calculator.displayText += char;
-  updateDisplayText(calculator.displayText);
-}
-
-function updateState(char) {
+function updateState(event) {
+  const char = event.textContent;
   if (char === '=') operate();
-  if ("+-×÷".includes(char) && calculator.firstNumbe !== null) calculator.operator = char;
+  if ("+-×÷".includes(char) && calculator.firstNumber !== null) calculator.operator = char;
   if (char === 'AC') allClear();
   if (char === 'C') allClear(); // Need to update for backspace. Clearing for now
-  // testing for secondNumber
-  if (char.match(/[0-9|.]/)) {
-    if (calculator.firstNumber && calculator.operator)  clearDisplay();
-    concatenateDisplay(char);
+  if (/^\d$/.test(char)) {
+    calculator.userInput += char;
     (!calculator.firstNumber) ? calculator.updateFirstNumber() : calculator.updateSecondNumber();
   };
+  return char;
 }
 
-
-function buildDisplay(button, event) {
-    // build display
-  const char = event.target.textContent;
+function buildDisplay(button, char) {
   if (char === '.') button.disabled = true;
-  
-  // Only clear leading zero for first number input
-  if (calculator.displayText === '0' && 
-    /^\d$/.test(char) && 
-    !calculator.operator) {  // Not entering second number
-  clearDisplay();
+  // check for first digit in firstNumber
+  if (/^\d$/.test(char) && calculator.firstNumber === null) clearDisplay();
+  // check for first digit in secondNumber
+  if (/^\d$/.test(char) && 
+  calculator.firstNumber && 
+  calculator.operator &&
+  calculator.secondNumber === null) clearDisplay();
+  updateDisplayText();
+  // reset to prepare for secondNumber  
+  if ("+-×÷".includes(char) && calculator.firstNumber !== null) calculator.userInput = '';
 }
-
-  // only show numbers and decimal point in display
-  updateState(char);
-  }
 
 function Calculator() {
   this.display = document.querySelector("#display")
-  this.displayText = '0';
+  this.userInput = '';
   this.buttons = document.querySelectorAll("button");
   this.firstNumber = null;
   this.secondNumber = null;
   this.operator = null;
   this.result = null;
   this.updateFirstNumber = function () {
-    this.firstNumber = Number(this.displayText);
+    this.firstNumber = Number(this.userInput);
   };
   this.updateSecondNumber = function () {
-    this.secondNumber = Number(this.displayText);
+    this.secondNumber = Number(this.userInput);
   };
   this.updateResultNumber = function () {
-    this.result = Number(this.displayText);
+    this.result = Number(this.userInput);
   };
+  
 }
 
 const calculator = new Calculator();
 
 calculator.buttons.forEach((button) => {
   button.addEventListener("click", (e) => {
-    buildDisplay(button, e);
+    const char = updateState(button, e);
+    buildDisplay(button, char);
   });
 });
 
