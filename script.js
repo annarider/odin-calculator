@@ -25,7 +25,13 @@ function operate() {
   }
 }
 
-const allClear = function() {
+function handleSubsequentNumbers(char) {
+  calculator.firstNumber = calculator.result;
+  calculator.operator = char;
+  calculator.secondNumber = null;
+}
+
+function allClear() {
   calculator.display.textContent = '0';
   calculator.userInput = '';
   calculator.firstNumber = null;
@@ -61,7 +67,7 @@ function updateState(event) {
     (!calculator.operator) ? calculator.updateFirstNumber() : calculator.updateSecondNumber();
   };
   // prepare for subsequent numbers after secondNumber
-  if (char === '=' && calculator.result !== null) calculator.firstNumber = '';
+  if ("+-×÷".includes(char) && calculator.result !== null) handleSubsequentNumbers(char);
   return char;
 }
 
